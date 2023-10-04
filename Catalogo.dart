@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_application_1/screens/Aceite.dart';
 import 'package:flutter_application_1/screens/Tienda.dart';
@@ -45,7 +45,9 @@ class _homeCatalogoState extends State<homeCatalogo> {
         child: Center(
           child: Column(
             children: <Widget>[
-              Text("texto")
+              Descripcioncasarepuesto(),
+              _Aceite()
+              
               // _aceite(),
             ],
           ),
@@ -55,13 +57,9 @@ class _homeCatalogoState extends State<homeCatalogo> {
   }
 }
 
-Widget _aceite() {
+Widget Descripcioncasarepuesto() {
   return Card(
-    child: InkWell(
-      onTap: () {
-        // Navigator.push(        context, MaterialPageRoute(builder: (context) => Aceites()));
-      },
-      child: Container(
+    child: Container(
         alignment: Alignment.center,
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
@@ -74,10 +72,36 @@ Widget _aceite() {
             SizedBox(
               height: 20,
             ),
-            Text("Repuesto a la alcance de su mano"),
+            Text("Tu repuesto a la mano"),
           ],
         ),
       ),
-    ),
+    
   );
 }
+Widget _Aceite() {
+    return Card(
+      child: InkWell(
+        onTap: () {
+          //Navigator.push(context,MaterialPageRoute(builder: (context) =>  Aceites()));
+        },
+        child: Container(
+          alignment: Alignment.center,
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+          child: const Column(
+            children: <Widget>[
+              Text(
+                "Aceite",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text("Recurda hacer el cambio de aceite con el kilometraje indicado por el fabricante"),
+            ],
+          ),
+        ),
+      ),
+    );
+  }

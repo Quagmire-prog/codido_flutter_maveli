@@ -96,7 +96,7 @@ class Detallesmantenimiento extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalles de los servicios de grúas'),
+        title: const Text('Detalles de los mantenimientos'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

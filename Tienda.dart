@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_application_1/screens/Catalogo.dart';
-import 'package:flutter_application_1/screens/Registro_de_gastos.dart';
+import 'package:flutter_application_1/screens/Catalogo.dart';
+//import 'package:flutter_application_1/screens/Registro_de_gastos.dart';
 
 void main() {
   runApp(tienda());
@@ -52,7 +52,7 @@ class _homeTiendaState extends State<homeTienda> {
       child: InkWell(
         onTap: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const Registrogasto()));
+              MaterialPageRoute(builder: (context) =>  catalogo()));
         },
         child: Container(
           alignment: Alignment.center,

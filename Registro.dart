@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(Registro());
+}
+
 class Client {
   String nombres;
   String apellidos;
@@ -58,6 +62,7 @@ class _RegistroState extends State<Registro> {
     correoController.clear();
     ubicacionController.clear();
     cedulaController.clear();
+    //constrasenaController.clear();
   }
 
   @override
@@ -85,9 +90,39 @@ class _RegistroState extends State<Registro> {
               const Text('Correo Electrónico'),
               TextField(controller: correoController),
               const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: registerClient,
-                child: const Text('Registrar'),
+              const Text("Contraseña"),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+                child: const TextField(
+                  //controller: constrasenaController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: "Contraseña",
+                    fillColor: Colors.white,
+                    filled: true,
+                  ),
+                ),
+              ),
+              const Text("Confirme su contraseña"),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+                child: const TextField(
+                  // controller: constrasenaController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: "Confirme su contraseña",
+                    fillColor: Colors.white,
+                    filled: true,
+                  ),
+                ),
+              ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: registerClient,
+                  child: const Text('Registrar'),
+                ),
               ),
             ],
           ),

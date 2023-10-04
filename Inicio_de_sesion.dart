@@ -76,7 +76,17 @@ class _IniciosesionState extends State<Iniciosesion> {
                 ElevatedButton(
                     onPressed: inicioUsuario,
                     child: Text("Iniciar sesion"),
-                  )
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 30),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+                  child: const Text("Crear una cuenta",
+                   // controller: constrasenaController,
+                    
+                    
+                    ),
+                  ),
+                
                 ],
               ),
             )));

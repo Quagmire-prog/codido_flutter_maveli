@@ -27,9 +27,17 @@ class _HomeRegistrogastoState extends State<HomeRegistrogasto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+         leading: BackButton(
+          //boton para regresar a la pagina anterior
+          onPressed: () {
+            //Navigator.push(       context, MaterialPageRoute(builder: (context) => tienda()));
+          },
+         ),
         title: const Text('Registro de gastos'),
       ),
-      body: SingleChildScrollView(
+      body: 
+      SingleChildScrollView(
+        
         padding: EdgeInsets.all(10.0),
         child: Center(
           child: Column(
@@ -59,7 +67,7 @@ class _HomeRegistrogastoState extends State<HomeRegistrogasto> {
             obscureText: true,
             decoration: InputDecoration(
               hintText: "Tipo de servicio",
-              fillColor: Colors.white,
+              fillColor: Colors.black12,
               filled: true,
             ),
           ),
@@ -73,7 +81,7 @@ class _HomeRegistrogastoState extends State<HomeRegistrogasto> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-          child: const Text("Servico:"),
+          child: const Text("Precio:"),
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
@@ -81,7 +89,7 @@ class _HomeRegistrogastoState extends State<HomeRegistrogasto> {
             // controller: constrasenaController,
             obscureText: true,
             decoration: InputDecoration(
-              hintText: "Tipo de servicio",
+              hintText: "Precio del servicio",
               fillColor: Colors.white,
               filled: true,
             ),
@@ -96,7 +104,7 @@ class _HomeRegistrogastoState extends State<HomeRegistrogasto> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-          child: const Text("Servico:"),
+          child: const Text("Fecha:"),
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
@@ -104,7 +112,7 @@ class _HomeRegistrogastoState extends State<HomeRegistrogasto> {
             // controller: constrasenaController,
             obscureText: true,
             decoration: InputDecoration(
-              hintText: "Tipo de servicio",
+              hintText: "Fecha del servicio",
               fillColor: Colors.white,
               filled: true,
             ),
@@ -119,7 +127,7 @@ class _HomeRegistrogastoState extends State<HomeRegistrogasto> {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-          child: const Text("Servico:"),
+          child: const Text("Cantidad:"),
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
@@ -127,7 +135,7 @@ class _HomeRegistrogastoState extends State<HomeRegistrogasto> {
             // controller: constrasenaController,
             obscureText: true,
             decoration: InputDecoration(
-              hintText: "Tipo de servicio",
+              hintText: "Cantidad",
               fillColor: Colors.white,
               filled: true,
             ),
