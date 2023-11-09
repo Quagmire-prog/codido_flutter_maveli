@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/main.dart';
 
 void main() {
   runApp(Registrogasto());
@@ -30,25 +31,21 @@ class _HomeRegistrogastoState extends State<HomeRegistrogasto> {
          leading: BackButton(
           //boton para regresar a la pagina anterior
           onPressed: () {
-            //Navigator.push(       context, MaterialPageRoute(builder: (context) => tienda()));
+            Navigator.push(       context, MaterialPageRoute(builder: (context) => MyApp()));
           },
          ),
         title: const Text('Registro de gastos'),
       ),
       body: 
-      SingleChildScrollView(
+      ListView(
         
         padding: EdgeInsets.all(10.0),
-        child: Center(
-          child: Column(
-            children: <Widget>[
+        children:  <Widget>[
               sevicio(),
               precio(),
               fecha(),
               Cantidad(),
             ],
-          ),
-        ),
       ),
     );
   }

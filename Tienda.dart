@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Catalogo.dart';
 //import 'package:flutter_application_1/screens/Registro_de_gastos.dart';
+// import 'package:flutter_application_1/main.dart';
 
-void main() {
-  runApp(tienda());
-}
+
+
 
 class tienda extends StatelessWidget {
-  //const tienda({super.key});
+  const tienda({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,13 @@ class _homeTiendaState extends State<homeTienda> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // leading: BackButton(
+        //   //boton para regresar a la pagina anterior
+        //   onPressed: () {
+        //     Navigator.pop(
+        //         context, MaterialPageRoute(builder: (context) => MyApp()));
+        //   },
+        // ),
         title: const Text('tienda'),
       ),
       body: SingleChildScrollView(

@@ -23,7 +23,7 @@ class _HomeTalleresMecanicosState extends State<HomeTalleresMecanicos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('tienda'),
+        title: const Text('Talleres Mecanicos'),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(10.0),
@@ -51,13 +51,13 @@ class _HomeTalleresMecanicosState extends State<HomeTalleresMecanicos> {
           child: const Column(
             children: <Widget>[
               Text(
-                "Aceitino",
+                "mecanicsolutions",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               SizedBox(
                 height: 20,
               ),
-              Text("15w50 250 Cordobas"),
+              Text("Los Mejores precios"),
             ],
           ),
         ),
@@ -75,13 +75,13 @@ class _HomeTalleresMecanicosState extends State<HomeTalleresMecanicos> {
           child: const Column(
             children: <Widget>[
               Text(
-                "Aceitino",
+                "carfixing",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               SizedBox(
                 height: 20,
               ),
-              Text("15w50 250 Cordobas"),
+              Text("Tu solucion aqui"),
             ],
           ),
         ),
@@ -98,13 +98,13 @@ class _HomeTalleresMecanicosState extends State<HomeTalleresMecanicos> {
           child: const Column(
             children: <Widget>[
               Text(
-                "Aceitino",
+                "Autorestorege",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               SizedBox(
                 height: 20,
               ),
-              Text("15w50 250 Cordobas"),
+              Text("Problemas?, Te los solucionamos"),
             ],
           ),
         ),
@@ -120,13 +120,13 @@ class _HomeTalleresMecanicosState extends State<HomeTalleresMecanicos> {
           child: const Column(
             children: <Widget>[
               Text(
-                "Aceitino",
+                "Tallergonzales",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               SizedBox(
                 height: 20,
               ),
-              Text("15w50 250 Cordobas"),
+              Text("soluciones tres B, bueno, bonito y barato"),
             ],
           ),
         ),
