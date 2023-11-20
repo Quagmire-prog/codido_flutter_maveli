@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Registro.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 class registroafiliado {
   var nombrenegocio;
   var nombrepropietario;
@@ -26,9 +27,12 @@ class RegistrodeAfiliados extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Material App', home: Registroafili());
+    return MaterialApp(title: 'Material App',
+     home: Registroafili());
   }
 }
+
+
 
 class Registroafili extends StatefulWidget {
   const Registroafili({super.key});
@@ -41,45 +45,84 @@ class _RegistroafiliState extends State<Registroafili> {
   final TextEditingController nombrenegocioController = TextEditingController();
   final TextEditingController nombrepropietarioController =
       TextEditingController();
-  final TextEditingController num_cel_negocioController =
-      TextEditingController();
+  final TextEditingController telefonoController = TextEditingController();
   final TextEditingController direccionController = TextEditingController();
   final TextEditingController email_negocioController = TextEditingController();
-  final TextEditingController tipo_servontroller = TextEditingController();
+  final TextEditingController tipo_servcioController = TextEditingController();
   final TextEditingController contrasenaController = TextEditingController();
   final TextEditingController confirmarContrasenaController =
       TextEditingController();
 
   final List<registroafiliado> Afiliado = [];
+  Future registerafiliado() async {
+    //http://172.16.144.157:8080
+    final url = 'http://192.168.1.24:8080/api/Negocio';
 
-  void registerafiliado() {
-    final Afili = registroafiliado(
-      nombrenegocio: nombrenegocioController.text,
-      nombrepropietario: nombrepropietarioController.text,
-      num_cel_negoc: num_cel_negocioController.text,
-      email_negocio: email_negocioController.text,
-      contra: contrasenaController.text,
-      confircontra: confirmarContrasenaController.text,
-      direccion: direccionController.text,
-      tipo_serv: tipo_servontroller.text,
-    );
+    String telefonoText = telefonoController.text;
+    int? telefono = int.tryParse(telefonoText);
 
-    setState(() {
-      Afiliado.add(Afili);
-    });
+    
+      Map<String, dynamic> userData = {
+        'nombre_negocio': nombrenegocioController.text,
+        'propietario':nombrepropietarioController.text,
+        'Telefono_negoc': telefono,
+        'direccion': direccionController.text,
+        'email': email_negocioController.text,
+        'clave_acceso': contrasenaController.text,
+      };
 
-    // Aquí puedes realizar acciones adicionales, como guardar en una base de datos.
+      final response = await http.post(
+        Uri.parse(url),
+        body: json.encode(userData),
+        headers: {
+          'Connection': 'keep-alive',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      );
 
-    // Limpiar los campos del formulario después de registrar.
-    nombrenegocioController.clear();
-    nombrepropietarioController.clear();
-    num_cel_negocioController.clear();
-    email_negocioController.clear();
-    direccionController.clear();
-    tipo_servontroller.clear();
-    contrasenaController.clear();
-    confirmarContrasenaController.clear();
+      if (response.statusCode == 201) {
+      // Gasto registrado con éxito
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(' registrado con éxito'),
+      ));
+    } else {
+      // Error al registrar el gasto
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('El codigo a fallado con exito!!!'),
+      ));
+    }
+    
   }
+  
+  // void registerafiliado() {
+  //   final Afili = registroafiliado(
+  //     nombrenegocio: nombrenegocioController.text,
+  //     nombrepropietario: nombrepropietarioController.text,
+  //     num_cel_negoc: num_cel_negocioController.text,
+  //     email_negocio: email_negocioController.text,
+  //     contra: contrasenaController.text,
+  //     confircontra: confirmarContrasenaController.text,
+  //     direccion: direccionController.text,
+  //     tipo_serv: tipo_servontroller.text,
+  //   );
+
+  //   setState(() {
+  //     Afiliado.add(Afili);
+  //   });
+
+  //   // Aquí puedes realizar acciones adicionales, como guardar en una base de datos.
+
+  //   // Limpiar los campos del formulario después de registrar.
+  //   nombrenegocioController.clear();
+  //   nombrepropietarioController.clear();
+  //   num_cel_negocioController.clear();
+  //   email_negocioController.clear();
+  //   direccionController.clear();
+  //   tipo_servontroller.clear();
+  //   contrasenaController.clear();
+  //   confirmarContrasenaController.clear();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +132,7 @@ class _RegistroafiliState extends State<Registroafili> {
           //boton para regresar a la pagina anterior
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Registro()));
+                context, MaterialPageRoute(builder: (context) => registrar()));
           },
         ),
         title: const Text('Registro de Afiliado'),
@@ -105,7 +148,7 @@ class _RegistroafiliState extends State<Registroafili> {
             TextField(controller: nombrepropietarioController),
             const SizedBox(height: 10),
             const Text('Numero de telefono del negocio'),
-            TextField(controller: num_cel_negocioController),
+            TextField(controller: telefonoController),
             const SizedBox(height: 10),
             const Text('Correo Electrónico'),
             TextField(controller: email_negocioController),
@@ -113,9 +156,7 @@ class _RegistroafiliState extends State<Registroafili> {
             const Text('Direccion de su negocio'),
             TextField(controller: direccionController),
             const SizedBox(height: 10),
-            const Text('Tipo de negocio'),
-            TextField(controller: tipo_servontroller),
-            const SizedBox(height: 10),
+            
             const Text("Contraseña"),
             Container(
               padding:

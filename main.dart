@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/Agenda.dart';
+// import 'package:flutter_application_1/screens/Agenda.dart';
+import 'package:flutter_application_1/screens/Dato_de_vehiculo.dart';
+import 'package:flutter_application_1/screens/Historial_de_mantenimientos.dart';
 // import 'package:flutter_application_1/screens/Historial_de_mantenimientos.dart';
 import 'package:flutter_application_1/screens/Inicio_de_sesion.dart';
+// import 'package:flutter_application_1/screens/Perfil_usuario.dart';
+import 'package:flutter_application_1/screens/Registro_de_gastos.dart';
+import 'package:flutter_application_1/screens/Registrodevehiculos.dart';
+// import 'package:flutter_application_1/screens/TalleresMecanicos.dart';
 // import 'package:flutter_application_1/screens/Inicio_de_sesion.dart';
-import 'package:flutter_application_1/screens/Tienda.dart';
-import 'package:flutter_application_1/screens/Talleres_mecanico.dart';
-import 'package:flutter_application_1/screens/Configuracion.dart';
+// import 'package:flutter_application_1/screens/Tienda.dart';
+// import 'package:flutter_application_1/screens/Talleres_mecanico.dart';
+// import 'package:flutter_application_1/screens/Configuracion.dart';
 
 
 void main() {
@@ -15,10 +21,10 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-      //"/inicio" : bui
-      },
+    return const MaterialApp(
+      //  routes: {
+      // '/home': (context) => MyApp(),
+      // },
       home: SBottomNavigationBar(),
     );
   }
@@ -35,11 +41,12 @@ class _SBottomNavigationBarState extends State<SBottomNavigationBar> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    
-    const Agenda(),
-    const TalleresMecanicos(),
-    const tienda(),
-    const Configuration(),
+    Datos_vehiculos(),
+    // const PerfilUsuario(),
+    Historialdegastos(),
+     RegistroGastosScreen(),
+    //const tienda(),
+    RegistroVehiculo(),
     Iniciosesion()
   ]; 
 
