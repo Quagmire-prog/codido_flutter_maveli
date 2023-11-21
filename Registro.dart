@@ -30,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future registerUser() async {
     //http://172.16.144.157:8080
-    final url = 'http://192.168.1.24:8080/api/Usuarios';
+    final url = 'http://172.16.144.157:8080/api/Usuarios';
 
     String telefonoText = telefonoController.text;
     int? telefono = int.tryParse(telefonoText);
@@ -62,12 +62,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (response.statusCode == 201) {
       // Gasto registrado con éxito
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Gasto registrado con éxito'),
+        content:  Text('Error al registrar el usuario'),
       ));
     } else {
       // Error al registrar el gasto
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Error al registrar el usuario'),
+        content:Text('Usuario registrado con éxito'),
       ));
     }
     }
@@ -124,6 +124,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ElevatedButton(
               onPressed: () {
                 registerUser();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Iniciosesion() ));
               },
               child: Text('Registrarse'),
             ),

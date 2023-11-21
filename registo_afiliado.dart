@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/Inicio_de_sesion.dart';
 import 'package:flutter_application_1/screens/Registro.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
 class registroafiliado {
   var nombrenegocio;
   var nombrepropietario;
@@ -27,12 +29,9 @@ class RegistrodeAfiliados extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Material App',
-     home: Registroafili());
+    return MaterialApp(title: 'Material App', home: Registroafili());
   }
 }
-
-
 
 class Registroafili extends StatefulWidget {
   const Registroafili({super.key});
@@ -50,38 +49,39 @@ class _RegistroafiliState extends State<Registroafili> {
   final TextEditingController email_negocioController = TextEditingController();
   final TextEditingController tipo_servcioController = TextEditingController();
   final TextEditingController contrasenaController = TextEditingController();
+  final TextEditingController tipoController = TextEditingController();
   final TextEditingController confirmarContrasenaController =
       TextEditingController();
 
   final List<registroafiliado> Afiliado = [];
   Future registerafiliado() async {
     //http://172.16.144.157:8080
-    final url = 'http://192.168.1.24:8080/api/Negocio';
+    final url = 'http://172.16.144.157:8080/api/Negocio';
 
     String telefonoText = telefonoController.text;
     int? telefono = int.tryParse(telefonoText);
 
-    
-      Map<String, dynamic> userData = {
-        'nombre_negocio': nombrenegocioController.text,
-        'propietario':nombrepropietarioController.text,
-        'Telefono_negoc': telefono,
-        'direccion': direccionController.text,
-        'email': email_negocioController.text,
-        'clave_acceso': contrasenaController.text,
-      };
+    Map<String, dynamic> userData = {
+      'nombre_negocio': nombrenegocioController.text,
+      'propietario': nombrepropietarioController.text,
+      'telefono_negoc': telefono,
+      'direccion': direccionController.text,
+      'tipo': tipoController.text,
+      'email': email_negocioController.text,
+      'clave_acceso': contrasenaController.text,
+    };
 
-      final response = await http.post(
-        Uri.parse(url),
-        body: json.encode(userData),
-        headers: {
-          'Connection': 'keep-alive',
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-      );
+    final response = await http.post(
+      Uri.parse(url),
+      body: json.encode(userData),
+      headers: {
+        'Connection': 'keep-alive',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    );
 
-      if (response.statusCode == 201) {
+    if (response.statusCode == 201) {
       // Gasto registrado con éxito
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(' registrado con éxito'),
@@ -92,9 +92,8 @@ class _RegistroafiliState extends State<Registroafili> {
         content: Text('El codigo a fallado con exito!!!'),
       ));
     }
-    
   }
-  
+
   // void registerafiliado() {
   //   final Afili = registroafiliado(
   //     nombrenegocio: nombrenegocioController.text,
@@ -147,16 +146,35 @@ class _RegistroafiliState extends State<Registroafili> {
             const Text('Nombre del propitario'),
             TextField(controller: nombrepropietarioController),
             const SizedBox(height: 10),
-            const Text('Numero de telefono del negocio'),
-            TextField(controller: telefonoController),
+            TextFormField(
+              controller: telefonoController,
+              decoration: InputDecoration(labelText: 'Telefono del negocio'),
+              keyboardType: TextInputType.number,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, ingresa el ID del auto';
+                }
+                return null;
+              },
+            ),
             const SizedBox(height: 10),
             const Text('Correo Electrónico'),
             TextField(controller: email_negocioController),
             const SizedBox(height: 10),
             const Text('Direccion de su negocio'),
             TextField(controller: direccionController),
+            TextFormField(
+              controller: tipoController,
+              decoration:
+                  InputDecoration(labelText: 'tipo de negocio del negocio'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, ingresa el ID del auto';
+                }
+                return null;
+              },
+            ),
             const SizedBox(height: 10),
-            
             const Text("Contraseña"),
             Container(
               padding:
@@ -187,7 +205,11 @@ class _RegistroafiliState extends State<Registroafili> {
             ),
             Center(
               child: ElevatedButton(
-                onPressed: registerafiliado,
+                onPressed: () {
+                  registerafiliado();
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Iniciosesion() ));
+                },
                 child: const Text('Registrar'),
               ),
             ),

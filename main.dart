@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/Configuracion.dart';
 // import 'package:flutter_application_1/screens/Agenda.dart';
 import 'package:flutter_application_1/screens/Dato_de_vehiculo.dart';
 import 'package:flutter_application_1/screens/Historial_de_mantenimientos.dart';
 // import 'package:flutter_application_1/screens/Historial_de_mantenimientos.dart';
 import 'package:flutter_application_1/screens/Inicio_de_sesion.dart';
+import 'package:flutter_application_1/screens/Registro.dart';
 // import 'package:flutter_application_1/screens/Perfil_usuario.dart';
 import 'package:flutter_application_1/screens/Registro_de_gastos.dart';
+import 'package:flutter_application_1/screens/Registrodeproducto.dart';
 import 'package:flutter_application_1/screens/Registrodevehiculos.dart';
+import 'package:flutter_application_1/screens/TalleresMecanicos.dart';
+import 'package:flutter_application_1/screens/listadetiendas.dart';
+import 'package:flutter_application_1/screens/registo_afiliado.dart';
 // import 'package:flutter_application_1/screens/TalleresMecanicos.dart';
 // import 'package:flutter_application_1/screens/Inicio_de_sesion.dart';
 // import 'package:flutter_application_1/screens/Tienda.dart';
 // import 'package:flutter_application_1/screens/Talleres_mecanico.dart';
 // import 'package:flutter_application_1/screens/Configuracion.dart';
-
 
 void main() {
   runApp(MyApp());
@@ -42,13 +47,10 @@ class _SBottomNavigationBarState extends State<SBottomNavigationBar> {
 
   final List<Widget> _pages = [
     Datos_vehiculos(),
-    // const PerfilUsuario(),
-    Historialdegastos(),
-     RegistroGastosScreen(),
-    //const tienda(),
-    RegistroVehiculo(),
-    Iniciosesion()
-  ]; 
+    Talleres_Mecanicos(),
+    Datos_tienda(),
+    Iniciosesion(),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -78,10 +80,10 @@ class _SBottomNavigationBarState extends State<SBottomNavigationBar> {
               icon: Icon(Icons.settings_outlined),
               label: 'Configuracion',
               backgroundColor: Colors.lightBlue),
-              BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_view_month_sharp),
-              label: 'Agenda2',
-              backgroundColor: Color.fromARGB(255, 244, 3, 140)),
+          // BottomNavigationBarItem(
+          //     icon: Icon(Icons.calendar_view_month_sharp),
+          //     label: 'Agenda2',
+          //     backgroundColor: Color.fromARGB(255, 244, 3, 140)),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: const Color.fromARGB(255, 128, 8, 240),

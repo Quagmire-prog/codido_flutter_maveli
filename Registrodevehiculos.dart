@@ -115,7 +115,7 @@ class _RegistroGastosFormState extends State<RegistroGastosForm> {
     final int id_usuario = int.parse(_idusuarioController.text);
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.24:8080/api/Automovil'),
+      Uri.parse('http://172.16.144.157:8080/api/Automovil'),
       body: jsonEncode({
         'modelo': Modelo,
         'marca': Marca,

@@ -1,338 +1,173 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+class Talleres_Mecanicos extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Datos_talleres(),
+    );
+  }
+}
 
-// import 'dart:convert';
-// import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
+class Taller {
+  final int id;
+  final String nombre;
+  final String direccion;
+  final int telefono;
+  final String propietario;
+  final String password;
+  final String email;
 
-// class Talleres_Mecanicos extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: TallerListScreen(),
-//     );
-//   }
-// }
+  Taller({
+    required this.id,
+    required this.nombre,
+    required this.direccion,
+    required this.telefono,
+    required this.propietario,
+    required this.email,
+    required this.password
+  });
+  factory Taller.fromJson(Map<String, dynamic> json) {
+  
+    return Taller(
+        id: json['id_negocio'],
+        nombre: json['propietario'],
+        propietario: json['nombre_negocio'],
+        direccion: json['direccion'],
+        telefono: json['telefono_negoc'],
+        email: json['email'],
+        password: json ['clave_acceso']
+        );
+  }
+}
+Future<List<Taller>> Listaafiliados() async {
+  try {
+    final response =
+        await http.get(Uri.parse('http://172.16.144.157:8080/api/Negocio'));
 
-// class Taller {
-//   final String nombre;
-//   final String direccion;
-//   final String telefono;
-//   final String whatsapp;
-
-//   Taller({
-//     required this.nombre,
-//     required this.direccion,
-//     required this.telefono,
-//     required this.whatsapp,
-//   });
-// }
-
-// class TallerListScreen extends StatefulWidget {
-//   @override
-//   _TallerListScreenState createState() => _TallerListScreenState();
-// }
-
-// class _TallerListScreenState extends State<TallerListScreen> {
-//   late List<Taller> talleres;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchData();
-//   }
-
-//   Future<void> fetchData() async {
-//     final response = await http.get(Uri.parse('http://tu_servidor/api/talleres'));
-
-//     if (response.statusCode == 200) {
-//       final List<dynamic> data = json.decode(response.body);
-//       setState(() {
-//         talleres = data.map((item) => Taller(
-//           nombre: item['nombre'],
-//           direccion: item['direccion'],
-//           telefono: item['telefono'],
-//           whatsapp: item['whatsapp'],
-//         )).toList();
-//       });
-//     } else {
-//       throw Exception('Error al cargar los talleres');
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Listado de Talleres Mecánicos'),
-//       ),
-//       body: talleres != null
-//           ? ListView.builder(
-//               itemCount: talleres.length,
-//               itemBuilder: (context, index) {
-//                 return ListTile(
-//                   title: Text(talleres[index].nombre),
-//                   onTap: () {
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (context) => TallerDetailScreen(taller: talleres[index]),
-//                       ),
-//                     );
-//                   },
-//                 );
-//               },
-//             )
-//           : Center(child: CircularProgressIndicator()),
-//     );
-//   }
-// }
-
-// class TallerDetailScreen extends StatelessWidget {
-//   final Taller taller;
-
-//   TallerDetailScreen({required this.taller});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(taller.nombre),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text('Dirección: ${taller.direccion}'),
-//             Text('Teléfono: ${taller.telefono}'),
-//             ElevatedButton(
-//               onPressed: () {
-//                 // Implementa la lógica para agendar una cita
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                     builder: (context) => CitasScreen(taller: taller),
-//                   ),
-//                 );
-//               },
-//               child: Text('Agendar Cita'),
-//             ),
-//             ElevatedButton(
-//               onPressed: () {
-//                 // Abre el chat de WhatsApp
-//                 _launchWhatsApp(taller.whatsapp);
-//               },
-//               child: Text('Abrir Chat de WhatsApp'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   // Función para abrir el chat de WhatsApp
-//   void _launchWhatsApp(String phone) async {
-//     String url = 'https://wa.me/$phone';
-//     // Implementa tu propia función para abrir enlaces externos
-//   }
-// }
-
-// class CitasScreen extends StatelessWidget {
-//   final Taller taller;
-
-//   CitasScreen({required this.taller});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Citas para ${taller.nombre}'),
-//       ),
-//       body: FutureBuilder<List<Cita>>(
-//         future: fetchCitas(tallerId: taller.id), // Reemplaza con la lógica real
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return CircularProgressIndicator();
-//           } else if (snapshot.hasError) {
-//             return Text('Error: ${snapshot.error}');
-//           } else {
-//             final List<Cita> citas = snapshot.data ?? [];
-//             return ListView.builder(
-//               itemCount: citas.length,
-//               itemBuilder: (context, index) {
-//                 return ListTile(
-//                   title: Text('Fecha: ${citas[index].fecha}'),
-//                   subtitle: Text('Descripción: ${citas[index].descripcion}'),
-//                 );
-//               },
-//             );
-//           }
-//         },
-//       ),
-//     );
-//   }
-
-//   Future<List<Cita>> fetchCitas({required int tallerId}) async {
-//     final response = await http.get(Uri.parse('http://tu_servidor/api/talleres/$tallerId/citas'));
-
-//     if (response.statusCode == 200) {
-//       final List<dynamic> data = json.decode(response.body);
-//       return data.map((item) => Cita(
-//         fecha: item['fecha'],
-//         descripcion: item['descripcion'],
-//       )).toList();
-//     } else {
-//       throw Exception('Error al cargar las citas');
-//     }
-//   }
-// }
-
-// class Cita {
-//   final String fecha;
-//   final String descripcion;
-
-//   Cita({
-//     required this.fecha,
-//     required this.descripcion,
-//   });
-// }
-// //final
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data.map((json) => Taller.fromJson(json)).toList();
+    } else {
+      throw Exception('Error al cargar los gastos');
+    }
+  } catch (error) {
+    print('Error en la solicitud HTTP: $error');
+    return [];
+  }
+}
 
 
+class Datos_talleres extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "vehiculos",
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Talleres"),
+        ),
+        body: FutureBuilder<List<Taller>>(
+          future: Listaafiliados(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              List<Taller> listaafiliados = snapshot.data!;
 
+              if (listaafiliados.isEmpty) {
+                // Si no hay vehículos, muestra el mensaje en una tarjeta
+                return Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Card(
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          child: const Text('No se encontró ningún taller'),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
 
+              // Si hay vehículos, muestra la lista en tarjetas
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: listaafiliados.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            // Navegar a la nueva pantalla cuando se toca un elemento
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => listaproductos(),
+                            //   ),
+                            // );
+                          },
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListTile(
+                                title: Text(listaafiliados[index].propietario),
+                                subtitle: Column(
+                                  children: [
+                                    Text(listaafiliados[index].direccion),
+                                    Text(
+                                        '${listaafiliados[index].telefono.toString()}'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          // Acciones cuando se presiona el botón flotante
+                          _launchWhatsApp();
+                        },
+                        child: Icon(Icons.message),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
 
+   void _launchWhatsApp() async {
+    String phoneNumber = '82353613';
+    String message = 'Hola, ¿cómo estás?';
 
+    // Si tienes un mensaje específico, puedes utilizar esta URL
+    String url = 'https://wa.me/$phoneNumber/?text=${Uri.encodeFull(message)}';
 
+    // Si solo quieres abrir WhatsApp sin un mensaje específico, usa esta URL
+    // String url = 'https://wa.me/$phoneNumber';
 
-
-
-
-
-
-
-// // class Talleres_Mecanicos extends StatelessWidget {
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return MaterialApp(
-// //       home: TallerListScreen(),
-// //     );
-// //   }
-// // }
-
-// // class Taller {
-// //   final String nombre;
-// //   final String direccion;
-// //   final String telefono;
-// //   final String whatsapp;
-
-// //   Taller({
-// //     required this.nombre,
-// //     required this.direccion,
-// //     required this.telefono,
-// //     required this.whatsapp,
-// //   });
-// // }
-
-// // class TallerListScreen extends StatefulWidget {
-// //   @override
-// //   _TallerListScreenState createState() => _TallerListScreenState();
-// // }
-
-// // class _TallerListScreenState extends State<TallerListScreen> {
-// //   late List<Taller> talleres;
-
-// //   @override
-// //   void initState() {
-// //     super.initState();
-// //     fetchData();
-// //   }
-
-// //   Future<void> fetchData() async {
-// //     final response = await http.get(Uri.parse('http://tu_servidor/api/talleres'));
-
-// //     if (response.statusCode == 200) {
-// //       final List<dynamic> data = json.decode(response.body);
-// //       setState(() {
-// //         talleres = data.map((item) => Taller(
-// //           nombre: item['nombre'],
-// //           direccion: item['direccion'],
-// //           telefono: item['telefono'],
-// //           whatsapp: item['whatsapp'],
-// //         )).toList();
-// //       });
-// //     } else {
-// //       throw Exception('Error al cargar los talleres');
-// //     }
-// //   }
-
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Scaffold(
-// //       appBar: AppBar(
-// //         title: Text('Listado de Talleres Mecánicos'),
-// //       ),
-// //       body: talleres != null
-// //           ? ListView.builder(
-// //               itemCount: talleres.length,
-// //               itemBuilder: (context, index) {
-// //                 return ListTile(
-// //                   title: Text(talleres[index].nombre),
-// //                   onTap: () {
-// //                     Navigator.push(
-// //                       context,
-// //                       MaterialPageRoute(
-// //                         builder: (context) => TallerDetailScreen(taller: talleres[index]),
-// //                       ),
-// //                     );
-// //                   },
-// //                 );
-// //               },
-// //             )
-// //           : Center(child: CircularProgressIndicator()),
-// //     );
-// //   }
-// // }
-
-// // class TallerDetailScreen extends StatelessWidget {
-// //   final Taller taller;
-
-// //   TallerDetailScreen({required this.taller});
-
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Scaffold(
-// //       appBar: AppBar(
-// //         title: Text(taller.nombre),
-// //       ),
-// //       body: Padding(
-// //         padding: const EdgeInsets.all(16.0),
-// //         child: Column(
-// //           crossAxisAlignment: CrossAxisAlignment.start,
-// //           children: [
-// //             Text('Dirección: ${taller.direccion}'),
-// //             Text('Teléfono: ${taller.telefono}'),
-// //             ElevatedButton(
-// //               onPressed: () {
-// //                 // Implementa la lógica para agendar una cita
-// //               },
-// //               child: Text('Agendar Cita'),
-// //             ),
-// //             ElevatedButton(
-// //               onPressed: () {
-// //                 // Abre el chat de WhatsApp
-// //                 _launchWhatsApp(taller.whatsapp);
-// //               },
-// //               child: Text('Abrir Chat de WhatsApp'),
-// //             ),
-// //           ],
-// //         ),
-// //       ),
-// //     );
-// //   }
-
-// //   // Función para abrir el chat de WhatsApp
-// //   void _launchWhatsApp(String phone) async {
-// //     String url = 'https://wa.me/$phone';
-// //     // await http.canLaunch(url) ? await http.launch(url) : throw 'No se pudo abrir $url';
-// //   }
-// // }
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'No se pudo abrir WhatsApp.';
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +9,7 @@ class productos{
   final String marca;
   final String numero_parte;
   final String categoria;
-  final Float costo;
+  final double costo;
   final int cantidad_stock;
   final int anio_fabricacion;
   final String modelo_auto;
@@ -65,116 +65,120 @@ class _HomeRegistroProductoState extends State<HomeRegistroProducto> {
       ),
       body: Form(
         key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: [
-          TextFormField(
-            controller: nombreproductoController,
-            decoration: const InputDecoration(labelText: 'Nombre del producto'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor, ingresa el nombre del producto';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: marcaController,
-            decoration:  const InputDecoration(labelText: 'Modelo del vehiculo'),
-            
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor, ingresa el modelo del vehiculo';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: numeroparteController,
-            decoration: InputDecoration(labelText: 'Numéro de parte'),
-            keyboardType: TextInputType.number,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor, ingresa el numéro de parte';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: categoriaController,
-            decoration: InputDecoration(labelText: 'Categoria'),
-           
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor, ingresa la categoria';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: costoController,
-            decoration: InputDecoration(labelText: 'Costo'),
-            keyboardType: TextInputType.number,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor, ingresa el Costo';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: cantidadStockController,
-            decoration: InputDecoration(labelText: 'Cantidad en Stock'),
-            keyboardType: TextInputType.number,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor, ingrese la cantidad en stock';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: aniofabricacionController,
-            decoration: InputDecoration(labelText: 'Año de fabricación'),
-             keyboardType: TextInputType.number,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor, ingresa el año de fabricacion';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: modeloautoController,
-            decoration: InputDecoration(labelText: 'Modelo de auto'),
-           
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor, ingresa el modelo del auto';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: idafiliadoController,
-            decoration: InputDecoration(labelText: 'ID del afiliado'),
-            keyboardType: TextInputType.number,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor, ingresa el ID del afiliado';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                // Envía los datos al servidor para registrar el gasto
-                RegistrarProductos();
-              }
-            },
-            child: Text('Registrar Gasto'),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFormField(
+                controller: nombreproductoController,
+                decoration: const InputDecoration(labelText: 'Nombre del producto'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingresa el nombre del producto';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: marcaController,
+                decoration:  const InputDecoration(labelText: 'Marca del vehiculo'),
+                
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingresa el modelo del vehiculo';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: numeroparteController,
+                decoration: InputDecoration(labelText: 'Numéro de parte'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingresa el numéro de parte';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: categoriaController,
+                decoration: InputDecoration(labelText: 'Categoria'),
+               
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingresa la categoria';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: costoController,
+                decoration: InputDecoration(labelText: 'Costo'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingresa el Costo';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: cantidadStockController,
+                decoration: InputDecoration(labelText: 'Cantidad en Stock'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingrese la cantidad en stock';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: aniofabricacionController,
+                decoration: InputDecoration(labelText: 'Año de fabricación'),
+                 keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingresa el año de fabricacion';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: modeloautoController,
+                decoration: InputDecoration(labelText: 'Modelo de auto'),
+               
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingresa el modelo del auto';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: idafiliadoController,
+                decoration: InputDecoration(labelText: 'ID del afiliado'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingresa el ID del afiliado';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    // Envía los datos al servidor para registrar el gasto
+                    RegistrarProductos();
+                  }
+                },
+                child: Text('Registrar Gasto'),
+              ),
+            ],
           ),
         ],
       ),
@@ -193,7 +197,7 @@ class _HomeRegistroProductoState extends State<HomeRegistroProducto> {
   final String modelo_auto = modeloautoController.text;
   final int id_afiliado = int.parse(idafiliadoController.text);
     final response = await http.post(
-      Uri.parse('http://192.168.1.24:8080/api/Productos'),
+      Uri.parse('http://172.16.144.157:8080/api/Productos'),
       body: jsonEncode({
         'nombre':nombre,
         'marca':marca,

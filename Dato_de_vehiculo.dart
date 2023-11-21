@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/Historial_de_mantenimientos.dart';
+import 'package:flutter_application_1/screens/Registrodevehiculos.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -38,15 +40,7 @@ Future<void> fetchData(int id) async {
       // La solicitud fue exitosa
       final Map<String, dynamic> data = json.decode(response.body);
 
-      // Procesa los datos recibidos
-      var value1 = data['marca'];
-      var value2 = data['modelo'];
-      var value3 = data['anio'];
-      // ... procesa otros valores según tu respuesta JSON
-
-      print('Valor 1: $value1');
-      print('Valor 2: $value2');
-      print('Valor 3: $value3');
+      
       // ... imprime u opera sobre otros valores
     } else {
       // Si la solicitud no fue exitosa, maneja el error
@@ -62,7 +56,7 @@ Future<void> fetchData(int id) async {
 Future<List<Vehiculo>> historial() async {
   try {
     final response =
-        await http.get(Uri.parse('http://192.168.1.24:8080/api/Automovil'));
+        await http.get(Uri.parse('http://172.16.144.157:8080/api/Automovil'));
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
@@ -75,7 +69,7 @@ Future<List<Vehiculo>> historial() async {
   } catch (e) {
     // Manejar errores generales durante la solicitud
     print('Error en la solicitud: $e');
-    
+
     return []; // Devolver una lista vacía en caso de error
   }
 
@@ -89,48 +83,101 @@ Future<List<Vehiculo>> historial() async {
   //   throw Exception('Error al cargar los gastos');
   // }
 }
-
 class Datos_vehiculos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Vehiculo>>(
-      future: historial(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          List<Vehiculo> vehicles = snapshot.data!;
+    return MaterialApp(
+      title: "vehiculos",
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Vehiculos"),
+        ),
+        body: FutureBuilder<List<Vehiculo>>(
+          future: historial(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              List<Vehiculo> vehicles = snapshot.data!;
 
-          if (vehicles.isEmpty) {
-            // Si no hay vehículos, muestra el mensaje en una tarjeta
-            return Card(
-              child: Container(
-                padding: const EdgeInsets.all(16.0),
-                child: const Text('No se encontró ningún vehículo'),
-              ),
-            );
-          }
+              if (vehicles.isEmpty) {
+                // Si no hay vehículos, muestra el mensaje en una tarjeta
+                return Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Card(
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          child: const Text('No se encontró ningún vehículo'),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
 
-          // Si hay vehículos, muestra la lista en tarjetas
-          return ListView.builder(
-            itemCount: vehicles.length,
-            itemBuilder: (context, index) {
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    title: Text(vehicles[index].marca),
-                    subtitle: Text('${vehicles[index].anio.toString()}'),
+              // Si hay vehículos, muestra la lista en tarjetas
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: vehicles.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            // Navegar a la nueva pantalla cuando se toca un elemento
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HistorialDeGastos(),
+                              ),
+                            );
+                          },
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListTile(
+                                title: Text(vehicles[index].marca),
+                                subtitle: Column(
+                                  children: [
+                                    Text(vehicles[index].modelo),
+                                    Text('${vehicles[index].anio.toString()}'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          // Acciones cuando se presiona el botón flotante
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegistroVehiculo(),
+                            ),
+                          );
+                        },
+                        child: Icon(Icons.add),
+                      ),
+                    ),
+                  ),
+                ],
               );
-            },
-          );
-        }
-      },
+            }
+          },
+        ),
+      ),
     );
   }
 }
-
